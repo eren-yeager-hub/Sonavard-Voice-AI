@@ -1,0 +1,12 @@
+venv/
+_pycache_/
+
+dataset/
+processed_dataset/
+segmented_dataset/
+
+*.wav
+*.mp3
+
+audio_features.csv
+distress_detector_model.h5
