@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Emergency Detection</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AI Emergency Detection System</h1>
+
+<!-- Waveform -->
+<div class="wave-container">
+<canvas id="wave"></canvas>
+</div>
+
+<!-- Status -->
+<div class="status" id="status">Idle</div>
+
+<!-- Phase + Timer -->
+<div class="phase" id="phase">Phase: Waiting...</div>
+
+<!-- Buttons -->
+<div class="buttons">
+<button class="start" onclick="start()">Start</button>
+<button class="stop" onclick="stop()">Stop</button>
+</div>
+
+<!-- Emergency -->
+<div class="emergency" id="emergency"></div>
+
+<!-- Logs -->
+<div class="logs-container">
+<h3>System Logs</h3>
+<div class="logs" id="logs"></div>
+</div>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

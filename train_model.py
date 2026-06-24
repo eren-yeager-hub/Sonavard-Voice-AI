@@ -87,7 +87,11 @@ print(classification_report(y_test, predictions))
 print("\nConfusion Matrix")
 print(confusion_matrix(y_test, predictions))
 
-# Save model
-model.save("distress_detector_model.h5")
+# Save model (NEW VERSION)
+model.save("distress_detector_model_v2.h5")
 
-print("\nModel saved as distress_detector_model.h5")
+import joblib
+joblib.dump(scaler, "feature_scaler_v2.pkl")
+
+print("\nModel saved as distress_detector_model_v2.h5")
+print("Scaler saved as feature_scaler_v2.pkl")
