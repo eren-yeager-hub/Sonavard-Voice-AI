@@ -30,7 +30,7 @@ scaler = joblib.load("feature_scaler_v2.pkl")
 
 
 # =========================
-# AUDIO SETTINGS
+# AUDIO SETTINGSpyp
 # =========================
 SAMPLE_RATE = 16000
 DURATION = 4
