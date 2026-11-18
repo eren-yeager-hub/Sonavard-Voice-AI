@@ -1,5 +1,5 @@
 """
-Aegis Voice AI — Hybrid Acoustic Distress & Parallel Multilingual Keyword Detector.
+Sonavard Voice AI — Hybrid Acoustic Distress & Parallel Multilingual Keyword Detector.
 
 Combines:
 1. Microphone-Agnostic DSP (High-pass + Soft-Knee AGC + Adaptive Noise-Floor VAD)
@@ -135,7 +135,7 @@ class DistressDetectorEngine:
                     self.cnn_model(dummy, training=False)
                     loaded_any = True
                 except Exception as exc:
-                    print(f"[Aegis] Warning: failed loading CNN model: {exc}")
+                    print(f"[Sonavard] Warning: failed loading CNN model: {exc}")
                     self.cnn_model = None
 
             if config.ENSEMBLE_MODEL_PATH.is_file():
@@ -143,7 +143,7 @@ class DistressDetectorEngine:
                     self.acoustic_model = joblib.load(str(config.ENSEMBLE_MODEL_PATH))
                     loaded_any = True
                 except Exception as exc:
-                    print(f"[Aegis] Warning: failed loading Acoustic Ensemble: {exc}")
+                    print(f"[Sonavard] Warning: failed loading Acoustic Ensemble: {exc}")
                     self.acoustic_model = None
 
             return loaded_any

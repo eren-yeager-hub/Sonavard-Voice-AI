@@ -1,4 +1,4 @@
-# Aegis Voice AI — Multi-Microphone Neural Distress & Emergency Sentinel
+# Sonavard Voice AI — Multi-Microphone Neural Distress & Emergency Sentinel
 
 A complete, security-hardened, real-time acoustic distress and multilingual emergency detection platform built to work reliably across **Bluetooth earphones (HFP 300–3400 Hz), wired earbuds, USB headsets, and laptop microphones**.
 
@@ -8,7 +8,7 @@ A complete, security-hardened, real-time acoustic distress and multilingual emer
 
 The original pipeline relied on hardcoded raw-amplitude gates (`RMS >= 0.07`, `Peak >= 0.6`), static MFCC means (which memorize microphone EQ curves), and a randomly split MLP where segments from the same file leaked across train and test sets.
 
-**Aegis Voice AI v3.0** solves every one of those root causes:
+**Sonavard Voice AI v3.0** solves every one of those root causes:
 
 1. **Microphone-Agnostic Signal Processing (`engine/audio_dsp.py`)**
    - **85 Hz Butterworth High-Pass Filter** strips cable bumps, breath pops, DC drift, and 50/60 Hz hum.
@@ -48,7 +48,7 @@ Copy `.env.example` to `.env` and fill in your Gmail App Password / Twilio crede
 ```powershell
 Copy-Item .env.example .env
 ```
-> By default `AEGIS_ALERT_DRY_RUN=true` (Safe Mode), so you can test everything safely without sending live SMS/Emails. Toggle Live Alerts from `.env` or the UI top bar when ready.
+> By default `SONAVARD_ALERT_DRY_RUN=true` (Safe Mode), so you can test everything safely without sending live SMS/Emails. Toggle Live Alerts from `.env` or the UI top bar when ready.
 
 ### 2. Train or Retrain the Multi-Microphone Models
 ```powershell

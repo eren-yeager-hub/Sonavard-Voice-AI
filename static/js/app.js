@@ -1,5 +1,5 @@
 /**
- * Aegis — Minimalist AI Voice Sentinel Client
+ * Sonavard — Minimalist AI Voice Sentinel Client
  * - Liquid 60 FPS Fluid AI Orb + Smooth Mirror Voice Equalizer
  * - Direct Browser WebAudio Streaming (Earphones / Bluetooth / USB) + System Mic Option
  * - Parallel Multilingual Speech Captions & Keyword Detection

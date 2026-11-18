@@ -1,5 +1,5 @@
 """
-Aegis Voice AI — Secure Real-Time Acoustic Distress & Emergency Detection Server.
+Sonavard Voice AI — Secure Real-Time Acoustic Distress & Emergency Detection Server.
 
 Features:
 - Real-time Browser WebAudio PCM streaming (/api/analyze-chunk) — works with ANY earphone/BT mic
@@ -432,7 +432,7 @@ def api_alert_sos():
     add_log("alert", "Manual SOS triggered by user!")
     outcome = alerts.trigger(
         trigger_type="manual_sos",
-        detail="Manual Panic SOS activated from Aegis Console",
+        detail="Manual Panic SOS activated from Sonavard Console",
         confidence=1.0,
         immediate=True,
     )
@@ -446,7 +446,7 @@ def api_alert_test():
     add_log("warn", "Diagnostic test alert triggered.")
     outcome = alerts.trigger(
         trigger_type="test",
-        detail="Diagnostic test alert from Aegis Voice AI",
+        detail="Diagnostic test alert from Sonavard Voice AI",
         confidence=1.0,
         immediate=True,
     )
@@ -464,8 +464,8 @@ def api_alert_cancel():
 
 
 if __name__ == "__main__":
-    add_log("success", f"Aegis Voice AI initialized (model_ready={detector.is_ready}).")
-    print(f"\n[*] Aegis Voice AI running securely on http://{config.HOST}:{config.PORT}")
+    add_log("success", f"Sonavard Voice AI initialized (model_ready={detector.is_ready}).")
+    print(f"\n[*] Sonavard Voice AI running securely on http://{config.HOST}:{config.PORT}")
     print(f"[*] Safe Mode (Dry-Run Alerts): {'ON' if alerts.dry_run else 'OFF (LIVE)'}")
     app.run(
         host=config.HOST,

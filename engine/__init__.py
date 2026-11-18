@@ -1,1 +1,1 @@
-"""Aegis Voice AI — Microphone-Agnostic Acoustic Distress & Emergency Engine."""
+"""Sonavard Voice AI — Microphone-Agnostic Acoustic Distress & Emergency Engine."""

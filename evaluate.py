@@ -1,5 +1,5 @@
 """
-Aegis Voice AI — Cross-Microphone Robustness Benchmark & Diagnostic Evaluator.
+Sonavard Voice AI — Cross-Microphone Robustness Benchmark & Diagnostic Evaluator.
 
 Evaluates the trained production models across 5 simulated microphone profiles
 (Clean, Bluetooth HFP Earphones, Wired Earbuds, Low-Gain Distant, Noisy Street)
@@ -46,7 +46,7 @@ def main() -> None:
         sys.exit(1)
 
     print("=" * 72)
-    print("AEGIS VOICE AI — MODEL DIAGNOSTICS & MULTI-MIC ROBUSTNESS REPORT")
+    print("SONAVARD VOICE AI — MODEL DIAGNOSTICS & MULTI-MIC ROBUSTNESS REPORT")
     print("=" * 72)
 
     if config.METADATA_PATH.is_file():

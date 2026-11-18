@@ -1,5 +1,5 @@
 """
-Aegis Voice AI — Zero-Leakage Multi-Microphone Training Pipeline.
+Sonavard Voice AI — Zero-Leakage Multi-Microphone Training Pipeline.
 
 Solves dataset overfitting & earphone/Bluetooth mic failure via:
 1. Source-level deduplication (eliminates `(1)` / `(2)` duplicate files).
@@ -354,7 +354,7 @@ def build_cnn_model() -> keras.Model:
     x = layers.Dropout(0.30)(x)
     out = layers.Dense(1, activation="sigmoid", name="distress_prob")(x)
 
-    model = keras.Model(inputs=inp, outputs=out, name="aegis_distress_cnn_v3")
+    model = keras.Model(inputs=inp, outputs=out, name="sonavard_distress_cnn_v3")
     model.compile(
         optimizer=keras.optimizers.Adam(learning_rate=1.3e-3),
         loss=keras.losses.BinaryCrossentropy(label_smoothing=0.05),
@@ -460,7 +460,7 @@ def _tune_fusion_and_threshold(
 def main() -> None:
     t0 = time.time()
     print("=" * 68, flush=True)
-    print("AEGIS VOICE AI — ZERO-LEAKAGE MULTI-MICROPHONE TRAINING PIPELINE", flush=True)
+    print("SONAVARD VOICE AI — ZERO-LEAKAGE MULTI-MICROPHONE TRAINING PIPELINE", flush=True)
     print("=" * 68, flush=True)
 
     sources = load_deduplicated_sources()
@@ -629,7 +629,7 @@ def main() -> None:
     print(f"Saved 2D Spectrogram CNN -> {config.CNN_MODEL_PATH}", flush=True)
 
     metadata = {
-        "model_version": "aegis-v3.0-multimic",
+        "model_version": "sonavard-v3.0-multimic",
         "trained_at_epoch": int(time.time()),
         "training_seconds": round(time.time() - t0, 1),
         "sample_rate": SAMPLE_RATE,

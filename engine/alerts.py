@@ -1,5 +1,5 @@
 """
-Secure, non-blocking emergency alert dispatcher for Aegis Voice AI.
+Secure, non-blocking emergency alert dispatcher for Sonavard Voice AI.
 Supports:
 - Safe Mode (Dry-Run simulation so testing never spams real SMS/Emails)
 - Configurable cooldown & pending countdown cancellation window
@@ -280,7 +280,7 @@ class AlertManager:
 
         location = self._get_location()
         body = (
-            f"AEGIS VOICE AI — EMERGENCY ALERT\n"
+            f"SONAVARD VOICE AI — EMERGENCY ALERT\n"
             f"Incident ID: {record.id}\n"
             f"Time: {record.timestamp}\n"
             f"Trigger: {record.trigger_type.upper()}\n"
@@ -293,7 +293,7 @@ class AlertManager:
         if config.email_is_configured():
             try:
                 msg = MIMEText(body, "plain", "utf-8")
-                msg["Subject"] = f"[EMERGENCY] Aegis Voice AI Alert ({record.id})"
+                msg["Subject"] = f"[EMERGENCY] Sonavard Voice AI Alert ({record.id})"
                 msg["From"] = config.EMAIL_SENDER
                 msg["To"] = config.EMAIL_RECEIVER
 

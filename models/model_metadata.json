@@ -1,74 +1,74 @@
-{
-  "model_version": "aegis-v3.0-multimic",
-  "trained_at_epoch": 1794985358,
-  "training_seconds": 548.0,
-  "sample_rate": 16000,
-  "window_seconds": 2.0,
-  "unique_source_recordings": {
-    "emergency": 45,
-    "normal": 50,
-    "total": 95
-  },
-  "augmented_train_samples": 1694,
-  "cnn_weight": 0.4,
-  "acoustic_weight": 0.6,
-  "thresholds": {
-    "high_sensitivity": 0.45,
-    "balanced": 0.56,
-    "strict": 0.68
-  },
-  "overall_oof_metrics": {
-    "roc_auc": 0.8673,
-    "accuracy": 0.7821,
-    "precision": 0.7223,
-    "recall": 0.9095,
-    "f1": 0.8052
-  },
-  "mic_benchmarks": {
-    "clean": {
-      "roc_auc": 0.8806,
-      "accuracy": 0.7786,
-      "precision": 0.7099,
-      "recall": 0.9347,
-      "f1": 0.8069,
-      "cnn_auc": 0.8081,
-      "acoustic_auc": 0.8649
-    },
-    "bluetooth_hfp": {
-      "roc_auc": 0.868,
-      "accuracy": 0.7836,
-      "precision": 0.7205,
-      "recall": 0.9196,
-      "f1": 0.8079,
-      "cnn_auc": 0.7639,
-      "acoustic_auc": 0.8589
-    },
-    "wired_earbud": {
-      "roc_auc": 0.8756,
-      "accuracy": 0.7637,
-      "precision": 0.6844,
-      "recall": 0.9698,
-      "f1": 0.8025,
-      "cnn_auc": 0.7884,
-      "acoustic_auc": 0.864
-    },
-    "low_gain_distant": {
-      "roc_auc": 0.8656,
-      "accuracy": 0.7886,
-      "precision": 0.7336,
-      "recall": 0.8995,
-      "f1": 0.8081,
-      "cnn_auc": 0.7915,
-      "acoustic_auc": 0.8522
-    },
-    "noisy_street": {
-      "roc_auc": 0.8657,
-      "accuracy": 0.796,
-      "precision": 0.7773,
-      "recall": 0.8241,
-      "f1": 0.8,
-      "cnn_auc": 0.7874,
-      "acoustic_auc": 0.8553
-    }
-  }
+{
+  "model_version": "sonavard-v3.0-multimic",
+  "trained_at_epoch": 1794985358,
+  "training_seconds": 548.0,
+  "sample_rate": 16000,
+  "window_seconds": 2.0,
+  "unique_source_recordings": {
+    "emergency": 45,
+    "normal": 50,
+    "total": 95
+  },
+  "augmented_train_samples": 1694,
+  "cnn_weight": 0.4,
+  "acoustic_weight": 0.6,
+  "thresholds": {
+    "high_sensitivity": 0.45,
+    "balanced": 0.56,
+    "strict": 0.68
+  },
+  "overall_oof_metrics": {
+    "roc_auc": 0.8673,
+    "accuracy": 0.7821,
+    "precision": 0.7223,
+    "recall": 0.9095,
+    "f1": 0.8052
+  },
+  "mic_benchmarks": {
+    "clean": {
+      "roc_auc": 0.8806,
+      "accuracy": 0.7786,
+      "precision": 0.7099,
+      "recall": 0.9347,
+      "f1": 0.8069,
+      "cnn_auc": 0.8081,
+      "acoustic_auc": 0.8649
+    },
+    "bluetooth_hfp": {
+      "roc_auc": 0.868,
+      "accuracy": 0.7836,
+      "precision": 0.7205,
+      "recall": 0.9196,
+      "f1": 0.8079,
+      "cnn_auc": 0.7639,
+      "acoustic_auc": 0.8589
+    },
+    "wired_earbud": {
+      "roc_auc": 0.8756,
+      "accuracy": 0.7637,
+      "precision": 0.6844,
+      "recall": 0.9698,
+      "f1": 0.8025,
+      "cnn_auc": 0.7884,
+      "acoustic_auc": 0.864
+    },
+    "low_gain_distant": {
+      "roc_auc": 0.8656,
+      "accuracy": 0.7886,
+      "precision": 0.7336,
+      "recall": 0.8995,
+      "f1": 0.8081,
+      "cnn_auc": 0.7915,
+      "acoustic_auc": 0.8522
+    },
+    "noisy_street": {
+      "roc_auc": 0.8657,
+      "accuracy": 0.796,
+      "precision": 0.7773,
+      "recall": 0.8241,
+      "f1": 0.8,
+      "cnn_auc": 0.7874,
+      "acoustic_auc": 0.8553
+    }
+  }
 }

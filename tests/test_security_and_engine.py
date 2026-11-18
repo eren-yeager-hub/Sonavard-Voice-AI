@@ -1,5 +1,5 @@
 """
-Automated verification tests for Aegis Voice AI:
+Automated verification tests for Sonavard Voice AI:
 - Microphone-agnostic DSP & Adaptive VAD (quiet earphone & Bluetooth HFP invariance)
 - Dual Feature Extractor shapes & finiteness
 - Multilingual Keyword Radar (exact + fuzzy matching)
@@ -30,7 +30,7 @@ from engine.audio_dsp import (
     simulate_microphone_profile,
 )
 from engine.features import extract_acoustic_features, extract_spectrogram_tensor
-import app as aegis_app
+import app as sonavard_app
 
 
 def _make_sine_scream(duration: float = 2.0, amp: float = 0.25) -> np.ndarray:
@@ -83,7 +83,7 @@ def test_dsp_and_earphone_vad() -> None:
 
 
 def test_multilingual_keywords() -> None:
-    det = aegis_app.detector
+    det = sonavard_app.detector
     assert det.match_keywords("Please help me right now!")["keyword"] in {"help", "help me"}
     assert det.match_keywords("Bhai bachao jaldi")["keyword"] == "bachao"
     assert det.match_keywords("madat karo koi")["keyword"] in {"madat", "madat karo"}
@@ -94,7 +94,7 @@ def test_multilingual_keywords() -> None:
 
 
 def test_api_security_and_end_to_end() -> None:
-    client = aegis_app.app.test_client()
+    client = sonavard_app.app.test_client()
 
     # 1. Security headers on home page
     r = client.get("/")
@@ -141,7 +141,7 @@ def test_api_security_and_end_to_end() -> None:
     assert r_spoof.status_code == 400
 
     # 6. Valid WAV upload succeeds through full dual-model File Lab
-    if aegis_app.detector.is_ready:
+    if sonavard_app.detector.is_ready:
         buf = io.BytesIO()
         sf.write(buf, _make_sine_scream(2.5, 0.2), SAMPLE_RATE, format="WAV")
         buf.seek(0)

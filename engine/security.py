@@ -1,5 +1,5 @@
 """
-Security utilities for Aegis Voice AI:
+Security utilities for Sonavard Voice AI:
 - Strict HTTP security headers (CSP, X-Frame-Options, nosniff, Permissions-Policy)
 - CSRF token generation & validation + Same-Origin checks
 - Sliding-window in-memory rate limiter

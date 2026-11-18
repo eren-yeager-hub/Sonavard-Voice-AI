@@ -1,5 +1,5 @@
 """
-Microphone-Invariant Dual Feature Extraction for Aegis Voice AI.
+Microphone-Invariant Dual Feature Extraction for Sonavard Voice AI.
 
 1. Spectrogram Tensor (64, 63, 3) for the 2D CNN:
    - Ch 0: Per-clip Z-normalized Log-Mel Spectrogram (120 Hz - 6500 Hz)
