@@ -1,12 +1,39 @@
+# Python / Virtualenv
 venv/
-_pycache_/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
 
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+
+# Raw & Processed Datasets (large binary audio files)
 dataset/
 processed_dataset/
 segmented_dataset/
+my_recordings_mp3/
+collected_data/
+evidence_clips/
 
+# Raw Audio & Temp Files
 *.wav
 *.mp3
+*.mpeg
+*.m4a
+*.flac
+*.ogg
+*.tmp
 
+# Legacy artifacts
 audio_features.csv
-distress_detector_model.h5
+*.h5
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

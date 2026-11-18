@@ -1,51 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>AI Emergency Detection</title>
-
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>Aegis — AI Voice Sentinel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+<body data-state="idle">
 
-<body>
+  <!-- Soft Dynamic Ambient Glow -->
+  <div class="ambient" aria-hidden="true">
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+  </div>
 
-<div class="container">
+  <!-- Emergency Countdown Banner (hidden unless emergency triggered) -->
+  <div id="alertBanner" class="alert-banner hidden" role="alert" aria-live="assertive">
+    <div class="alert-inner">
+      <div class="alert-dot"></div>
+      <div class="alert-copy">
+        <strong id="alertTitle">Emergency Detected</strong>
+        <span id="alertDetail">Dispatching alert shortly...</span>
+      </div>
+      <div class="alert-right">
+        <span id="alertTimer" class="alert-timer">5.0s</span>
+        <button id="btnCancelAlert" class="btn-cancel" type="button">Cancel</button>
+      </div>
+    </div>
+    <div class="alert-bar-track"><div id="alertBarFill" class="alert-bar-fill"></div></div>
+  </div>
 
-<h1>AI Emergency Detection System</h1>
+  <!-- Minimal Floating Navigation Bar -->
+  <header class="nav">
+    <div class="nav-brand">
+      <div class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none">
+          <path d="M16 3L27 7.8V15.5C27 22.3 22.2 27.6 16 29.5C9.8 27.6 5 22.3 5 15.5V7.8L16 3Z" stroke="currentColor" stroke-width="1.8" fill="rgba(56,189,248,0.1)"/>
+          <path d="M10.5 16H13L14.8 11.5L17.5 20.5L19.5 14.5L21 16H22.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="brand-name">Aegis</span>
+    </div>
 
-<!-- Waveform -->
-<div class="wave-container">
-<canvas id="wave"></canvas>
-</div>
+    <!-- Calm 3-Tab Pill Switcher -->
+    <nav class="nav-tabs" id="mainNavTabs" aria-label="Views">
+      <button type="button" class="tab-btn active" data-view="live">Live</button>
+      <button type="button" class="tab-btn" data-view="lab">Test Audio</button>
+      <button type="button" class="tab-btn" data-view="activity">Activity</button>
+    </nav>
 
-<!-- Status -->
-<div class="status" id="status">Idle</div>
+    <div class="nav-actions">
+      <button id="btnSafeMode" class="mode-pill" type="button" title="Toggle Safe Mode (Dry-Run vs Live Alerts)">
+        <span id="safeDot" class="dot warn"></span>
+        <span id="safeText">Safe Mode</span>
+      </button>
+      <button id="btnSettings" class="icon-btn" type="button" aria-label="Settings" title="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.85 1 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+      <button id="btnSos" class="btn-sos" type="button">SOS</button>
+    </div>
+  </header>
 
-<!-- Phase + Timer -->
-<div class="phase" id="phase">Phase: Waiting...</div>
+  <!-- ================================================================
+       VIEW 1: LIVE — Clean, Focused AI Voice Sentinel
+       ================================================================ -->
+  <main class="stage">
+    <section id="view-live" class="view active live-stage">
 
-<!-- Buttons -->
-<div class="buttons">
-<button class="start" onclick="start()">Start</button>
-<button class="stop" onclick="stop()">Stop</button>
-</div>
+      <!-- Living Fluid AI Orb -->
+      <div class="orb-wrap">
+        <canvas id="orbCanvas"></canvas>
+      </div>
 
-<!-- Emergency -->
-<div class="emergency" id="emergency"></div>
+      <!-- Clear Human Status -->
+      <div class="status-block">
+        <h1 id="statusHeading">Ready to listen</h1>
+        <p id="statusSubtitle" class="status-sub">Choose your earphones or mic below and tap Start.</p>
+      </div>
 
-<!-- Logs -->
-<div class="logs-container">
-<h3>System Logs</h3>
-<div class="logs" id="logs"></div>
-</div>
+      <!-- Primary Action Pill -->
+      <div class="action-row">
+        <button id="btnListen" class="btn-hero" type="button">
+          <span id="listenIcon" class="hero-dot"></span>
+          <span id="listenLabel">Start Listening</span>
+        </button>
+        <button id="btnCalibrate" class="btn-subtle" type="button" title="Adapts to your earphone mic and room noise in 2 seconds">
+          <span id="calibrateLabel">Calibrate Mic</span>
+        </button>
+      </div>
 
-</div>
+      <!-- Sleek Floating Voice Equalizer + Mic Capsule -->
+      <div class="mic-capsule">
+        <canvas id="eqCanvas" class="eq-canvas" aria-hidden="true"></canvas>
+        <div class="capsule-divider"></div>
+        <div class="mic-picker">
+          <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="22"></line>
+          </svg>
+          <select id="micSelect" class="mic-select" aria-label="Microphone">
+            <option value="">Default Microphone</option>
+          </select>
+          <button id="btnRefreshMics" class="mini-icon-btn" type="button" title="Refresh devices">&#8635;</button>
+        </div>
+      </div>
 
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+      <!-- Soft Live Caption (only shows text when speaking) -->
+      <div id="liveCaption" class="live-caption hidden"></div>
 
+    </section>
+
+    <!-- ================================================================
+         VIEW 2: TEST AUDIO — Clean Drag-and-Drop Audio File Checker
+         ================================================================ -->
+    <section id="view-lab" class="view lab-stage hidden">
+      <div class="card card-centered">
+        <div class="card-head">
+          <h2>Test an Audio Recording</h2>
+          <p class="muted">Drop any WAV, MP3, OGG, FLAC, or M4A clip to check it with your custom AI model.</p>
+        </div>
+
+        <div id="dropZone" class="dropzone" tabindex="0">
+          <input type="file" id="fileInput" accept=".wav,.mp3,.ogg,.flac,.m4a,.webm" hidden>
+          <div class="drop-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+          </div>
+          <div id="dropTitle" class="drop-title">Drop audio file here or browse</div>
+          <div class="drop-hint">Up to 10 MB • Analyzed locally in memory</div>
+        </div>
+
+        <div id="labResult" class="lab-result hidden">
+          <div class="lab-verdict-row">
+            <div>
+              <div id="labFileName" class="lab-file">recording.wav</div>
+              <div id="labMeta" class="muted">0.0s</div>
+            </div>
+            <span id="labBadge" class="verdict-pill">SAFE</span>
+          </div>
+          <div class="lab-meter-wrap">
+            <div class="meter-labels">
+              <span>Peak Distress Confidence</span>
+              <strong id="labScoreText" class="mono">0%</strong>
+            </div>
+            <div class="bar-track"><div id="labScoreFill" class="bar-fill"></div></div>
+          </div>
+          <div id="labTimeline" class="lab-timeline"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         VIEW 3: ACTIVITY — Optional Insights, Model Accuracy & Logs
+         ================================================================ -->
+    <section id="view-activity" class="view activity-stage hidden">
+      <div class="activity-grid">
+
+        <!-- Model & Live Signal Overview -->
+        <div class="card">
+          <div class="card-head row">
+            <div>
+              <h2>Model Insights</h2>
+              <p class="muted" id="modelSubtitle">Custom Dual-Branch AI • 100% Local</p>
+            </div>
+            <span id="overallAucPill" class="soft-pill mono">AUC --</span>
+          </div>
+
+          <div class="live-scores">
+            <div class="metric-row">
+              <span>Acoustic Distress Confidence</span>
+              <strong id="actCombined" class="mono">0%</strong>
+            </div>
+            <div class="bar-track"><div id="actCombinedBar" class="bar-fill"></div></div>
+
+            <div class="mini-grid">
+              <div class="mini-stat">
+                <span class="muted">2D Spectrogram CNN</span>
+                <strong id="actCnn" class="mono">0%</strong>
+              </div>
+              <div class="mini-stat">
+                <span class="muted">Prosodic Ensemble</span>
+                <strong id="actAc" class="mono">0%</strong>
+              </div>
+              <div class="mini-stat">
+                <span class="muted">Adaptive AGC</span>
+                <strong id="actAgc" class="mono">+0.0 dB</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <h3 class="subhead">Cross-Microphone Robustness (Unseen Audio)</h3>
+          <div id="benchmarkBars" class="bench-list"></div>
+        </div>
+
+        <!-- Incident History & Event Feed -->
+        <div class="card">
+          <div class="card-head row">
+            <h2>Activity Log</h2>
+            <div class="mini-tabs" id="logTabs">
+              <button type="button" class="mini-tab active" data-logtab="incidents">Alerts</button>
+              <button type="button" class="mini-tab" data-logtab="logs">Events</button>
+            </div>
+          </div>
+          <div id="incidentList" class="feed-list"></div>
+          <div id="eventList" class="feed-list hidden"></div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Slide-Over Settings Drawer -->
+  <div id="drawerOverlay" class="overlay hidden"></div>
+  <aside id="settingsDrawer" class="drawer hidden" aria-label="Settings">
+    <div class="drawer-head">
+      <h2>Settings</h2>
+      <button id="btnCloseSettings" class="icon-btn" type="button" aria-label="Close">&times;</button>
+    </div>
+
+    <div class="drawer-content">
+      <div class="setting-group">
+        <label class="setting-label">Detection Sensitivity</label>
+        <div class="seg-3" id="sensitivitySeg">
+          <button type="button" class="seg-opt" data-sens="high_sensitivity">High</button>
+          <button type="button" class="seg-opt active" data-sens="balanced">Balanced</button>
+          <button type="button" class="seg-opt" data-sens="strict">Strict</button>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label" for="langSelect">Speech Language</label>
+        <select id="langSelect" class="field-input">
+          <option value="en-US">English (US)</option>
+          <option value="en-IN">English (India)</option>
+          <option value="hi-IN">Hindi (India)</option>
+          <option value="es-ES">Spanish</option>
+          <option value="fr-FR">French</option>
+        </select>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label">Audio Capture Mode</label>
+        <div class="seg-2" id="sourceModeSeg">
+          <button type="button" class="seg-opt active" data-mode="browser">Browser Mic (Best for Earphones)</button>
+          <button type="button" class="seg-opt" data-mode="server">System OS Mic</button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="setting-group">
+        <label class="switch-row">
+          <div>
+            <strong>Safe Mode (Dry-Run)</strong>
+            <span class="muted">Simulates alerts without sending live SMS/Email</span>
+          </div>
+          <input type="checkbox" id="setDryRun" checked>
+        </label>
+
+        <label class="switch-row">
+          <div>
+            <strong>Save Emergency Clip</strong>
+            <span class="muted">Opt-in local backup only when confirmed</span>
+          </div>
+          <input type="checkbox" id="setSaveEvidence">
+        </label>
+
+        <div class="slider-row">
+          <div class="meter-labels">
+            <span>Cancel Countdown</span>
+            <strong id="cancelWinText" class="mono">5s</strong>
+          </div>
+          <input type="range" id="setCancelWin" min="0" max="15" value="5">
+        </div>
+
+        <div class="slider-row">
+          <div class="meter-labels">
+            <span>Alert Cooldown</span>
+            <strong id="cooldownText" class="mono">25s</strong>
+          </div>
+          <input type="range" id="setCooldown" min="5" max="120" value="25">
+        </div>
+
+        <div class="channel-row">
+          <span id="emailBadge" class="chan-badge">Email: --</span>
+          <span id="smsBadge" class="chan-badge">SMS: --</span>
+        </div>
+
+        <button id="btnTestAlert" class="btn-subtle full" type="button">Send Test Alert</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="setting-group">
+        <label class="setting-label" for="setKeywords">Emergency Keywords (comma-separated)</label>
+        <textarea id="setKeywords" class="field-input" rows="4"></textarea>
+      </div>
+
+      <button id="btnSaveSettings" class="btn-save" type="button">Save Changes</button>
+    </div>
+  </aside>
+
+  <!-- Subtle Floating Toasts -->
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
 </body>
 </html>
